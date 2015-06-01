@@ -2,7 +2,7 @@
   "name": "smurl",
   "version": "1.0.0",
   "description": "smart url matching",
-  "main": "match.js",
+  "main": "index.js",
   "scripts": {
     "test": "karma start --single-run"
   },
@@ -19,5 +19,8 @@
     "karma-spec-reporter": "0.0.19",
     "mocha": "^2.2.5",
     "sinon": "^1.14.1"
+  },
+  "dependencies": {
+    "lodash-compat": "^3.9.3"
   }
 }
