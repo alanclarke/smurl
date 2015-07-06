@@ -3,7 +3,8 @@ smart url matching
 
 - matches url fragments (protocol, domain, path, querystring)
 - ignores url fragments if omitted
-- does case insensitive matching on querystring params
+- does case insensitive matching on query string params
+- if the domain is present, it will match on path, even if omitted
 
 ## Usage
 

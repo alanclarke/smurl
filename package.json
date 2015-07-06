@@ -1,0 +1,26 @@
+{
+  "name": "smurl",
+  "version": "1.0.0",
+  "description": "smart url matching",
+  "main": "index.js",
+  "scripts": {
+    "test": "karma start --single-run"
+  },
+  "author": "alan@qubit.com",
+  "license": "none",
+  "devDependencies": {
+    "browserify": "^10.2.3",
+    "karma": "^0.12.33",
+    "karma-bro": "^0.11.1",
+    "karma-chrome-launcher": "^0.1.12",
+    "karma-expect": "^1.1.0",
+    "karma-mocha": "^0.1.10",
+    "karma-sinon": "^1.0.4",
+    "karma-spec-reporter": "0.0.19",
+    "mocha": "^2.2.5",
+    "sinon": "^1.14.1"
+  },
+  "dependencies": {
+    "lodash-compat": "^3.9.3"
+  }
+}
