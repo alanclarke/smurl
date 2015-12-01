@@ -1,4 +1,5 @@
-/* global describe, it, expect */
+/* global describe it */
+var expect = require('expect.js')
 var match = require('../lib/match')
 
 describe('match', function () {
@@ -47,19 +48,10 @@ describe('match', function () {
       expect(match('/a/b', '/a')).to.eql(false)
       expect(match('https://a.com/a/b?a=b#c=d', '/a')).to.eql(false)
     })
-    it('should ignore path if omitted, unless domain is present', function () {
+    it('should ignore path if omitted', function () {
       expect(match('https://a.com/blah', 'https://')).to.eql(true)
       expect(match('https://a.com/a/b?a=b#c=d', '?a=b')).to.eql(true)
       expect(match('https://a.com/a/b?a=b#c=d', '#c=d')).to.eql(true)
-    })
-    describe('when domain is specified', function () {
-      it('should not ignore the path', function () {
-        expect(match('https://a.com/a', 'a.com')).to.eql(false)
-        expect(match('https://a.com/', 'a.com')).to.eql(false)
-        expect(match('https://a.com', 'a.com')).to.eql(true)
-        expect(match('https://a.com/a/b?a=b#c=d', 'a.com/a/b')).to.eql(true)
-        expect(match('https://a.com/a/b?a=b#c=d', 'a.com/a/b')).to.eql(true)
-      })
     })
   })
   describe('query', function () {
