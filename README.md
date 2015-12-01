@@ -1,8 +1,5 @@
 # ![smurl](https://cloud.githubusercontent.com/assets/640611/11503072/7901f55c-9836-11e5-9e5f-d3fdcd690b1d.png)
 
-[![Dependency Status](https://david-dm.org/qubitdigital/smurl.svg)](https://david-dm.org/qubitdigital/smurl)
-[![devDependency Status](https://david-dm.org/qubitdigital/smurl/dev-status.svg)](https://david-dm.org/qubitdigital/smurl#info=devDependencies)
-
 smart partial url matching
 ```
 npm install smurl
