@@ -1,13 +1,13 @@
 {
   "name": "smurl",
   "version": "1.0.0",
-  "description": "smart url matching",
+  "description": "smart partial url matching",
   "main": "index.js",
   "scripts": {
-    "test": "node_modules/.bin/karma start --single-run"
+    "test": "karma start --single-run"
   },
   "author": "alan@qubit.com",
-  "license": "none",
+  "license": "UNLICENSED",
   "devDependencies": {
     "expect.js": "^0.3.1",
     "istanbul": "^0.4.1",
@@ -23,5 +23,20 @@
   "dependencies": {
     "lodash-compat": "^3.10.1",
     "urlite": "^1.2.0"
-  }
+  },
+  "directories": {
+    "test": "test"
+  },
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/qubitdigital/smurl.git"
+  },
+  "keywords": [
+    "url",
+    "matching"
+  ],
+  "bugs": {
+    "url": "https://github.com/qubitdigital/smurl/issues"
+  },
+  "homepage": "https://github.com/qubitdigital/smurl#readme"
 }

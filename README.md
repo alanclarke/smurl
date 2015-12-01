@@ -1,35 +1,43 @@
-# Smurl
-smart url matching
+# ![smurl](https://cloud.githubusercontent.com/assets/640611/11503072/7901f55c-9836-11e5-9e5f-d3fdcd690b1d.png)
 
-- matches url fragments (protocol, domain, path, querystring)
-- ignores url fragments if omitted
-- does case insensitive matching on query string params
-- if the domain is present, it will match on path, even if omitted
+[![Dependency Status](https://david-dm.org/qubitdigital/smurl.svg)](https://david-dm.org/qubitdigital/smurl)
+[![devDependency Status](https://david-dm.org/qubitdigital/smurl/dev-status.svg)](https://david-dm.org/qubitdigital/smurl#info=devDependencies)
 
-## Usage
-
+smart partial url matching
+```
+npm install smurl
+```
 ```javascript
-//api
+// api
 match(actual, expected)
 
-// match protocol (omit to make the matching protocol agnostic)
-match('http://www.domain.com?a=b#blah', 'http://') // true
-match('https://www.domain.com?a=b&b=c#blah', 'https://') // true
+// match on protocol
+match('http://www.domain.com/?a=b#blah', 'http://') // true
+match('http://www.domain.com/?a=b&b=c#blah', 'https://') // false
 
-// match path (omit to make the matching path agnostic)
+// match on path
 match('http://www.domain.com/somepath?a=b&b=c#blah', '/somepath') // true
 match('http://www.domain.com/somepath/anotherpath?a=b&b=c#blah', '/somepath') // false
+match('http://www.domain.com/?a=b&b=c#blah', '/') // true
 
-// match query (omit to make the matching querystring agnostic)
-match('https://www.domain.com?a=b#blah', '?a=b') // true
-match('http://www.domain.com?a=b&b=c#blah', '?b=c&a=b') // true
+// match on querystring (query params are order agnostic)
+match('https://www.domain.com/?a=b#blah', '?a=b') // true
+match('http://www.domain.com/?a=b&b=c#blah', '?b=c&a=b') // true
+match('http://www.domain.com/?a=b&b=c&c=d#blah', '?b=c&a=b') // true
+match('http://www.domain.com/?y=z#blah', '?b=c&a=b') // false
 
-// match hash (omit to make the matching hash agnostic)
+// match on hash
 match('http://www.domain.com/somepath?a=b&b=c#blah', '#blah') // true
 
-//match on domain and path
+// match on domain and path
 match('https://www.domain.com/blah?a=b#blah', 'www.domain.com/blah') // true
 
-//match on all possible fragments
-match('https://www.domain.com?a=b#blah', 'https://www.domain.com?a=b#blah') // true
+// match on all possible fragments
+match('https://www.domain.com/?a=b#blah', 'https://www.domain.com?a=b#blah') // true
 ```
+
+```
+npm test
+```
+
+[![js-standard-style](https://cdn.rawgit.com/feross/standard/master/badge.svg)](https://github.com/feross/standard)
