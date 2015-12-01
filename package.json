@@ -1,10 +1,10 @@
 {
   "name": "smurl",
   "version": "1.0.0",
-  "description": "smart partial url matching",
+  "description": "smart partial url matching for nodejs and the browser",
   "main": "index.js",
   "scripts": {
-    "test": "karma start --single-run"
+    "test": "make test"
   },
   "author": "alan@qubit.com",
   "license": "UNLICENSED",
