@@ -30,6 +30,9 @@ match('http://www.domain.com/somepath?a=b&b=c#blah', '#blah') // true
 match('https://www.domain.com/blah?a=b#blah', 'www.domain.com/blah') // true
 match('https://www.domain.com/blah?a=b#blah', 'www.domain.com') // true
 
+// match on domain and path
+match('https://www.domain.com', 'www.domain.com/') // true
+
 // match on all possible fragments
 match('https://www.domain.com/?a=b#blah', 'https://www.domain.com?a=b#blah') // true
 ```

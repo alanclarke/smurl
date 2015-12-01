@@ -22,7 +22,7 @@ describe('match', function () {
   describe('domain', function () {
     it('should return true if domain matches', function () {
       expect(match('a.com', 'a.com')).to.eql(true)
-      expect(match('http://a.com?a=b#c=d', 'a.com')).to.eql(true)
+      expect(match('http://a.com/?a=b#c=d', 'a.com')).to.eql(true)
       expect(match('http://a.com/a/b?a=b#c=d', 'a.com/a/b')).to.eql(true)
     })
     it('should return false if domain does not match', function () {
@@ -36,6 +36,11 @@ describe('match', function () {
       expect(match('https://a.com/blah', 'https://')).to.eql(true)
       expect(match('https://a.com/a/b?a=b#c=d', '?a=b')).to.eql(true)
       expect(match('https://a.com/a/b?a=b#c=d', '#c=d')).to.eql(true)
+    })
+    it('should treat forwardslash and no forwardslash as equivalent', function () {
+      expect(match('www.a.com', '/')).to.eql(true)
+      expect(match('www.a.com?a=b', '/')).to.eql(true)
+      expect(match('www.a.com#asd', '/')).to.eql(true)
     })
   })
   describe('path', function () {
