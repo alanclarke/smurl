@@ -23,6 +23,7 @@ describe('match', function () {
     it('should return true if domain matches', function () {
       expect(match('a.com', 'a.com')).to.eql(true)
       expect(match('http://a.com/?a=b#c=d', 'a.com')).to.eql(true)
+      expect(match('http://a.com/a/b?a=b#c=d', 'a.com')).to.eql(true)
       expect(match('http://a.com/a/b?a=b#c=d', 'a.com/a/b')).to.eql(true)
     })
     it('should return false if domain does not match', function () {
