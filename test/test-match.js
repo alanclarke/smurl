@@ -43,6 +43,15 @@ describe('match', function () {
       expect(match('www.a.com?a=b', '/')).to.eql(true)
       expect(match('www.a.com#asd', '/')).to.eql(true)
     })
+    describe('expect path mode', function () {
+      describe('when the user wants to match on domain and doesnt specify a path', function () {
+        it('should pretend the user specified a path', function () {
+          expect(match('a.com', 'a.com', true)).to.eql(true)
+          expect(match('a.com/', 'a.com', true)).to.eql(true)
+          expect(match('a.com/some/path', 'a.com', true)).to.eql(false)
+        })
+      })
+    })
   })
   describe('path', function () {
     it('should return true if path matches', function () {
