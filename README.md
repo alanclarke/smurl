@@ -6,7 +6,7 @@ npm install smurl
 ```
 ```javascript
 // api
-match(actual, expected)
+// match(actual, expected, [interpreter])
 
 // match on protocol
 match('http://www.domain.com/?a=b#blah', 'http://') // true
@@ -35,6 +35,22 @@ match('https://www.domain.com', 'www.domain.com/') // true
 
 // match on all possible fragments
 match('https://www.domain.com/?a=b#blah', 'https://www.domain.com?a=b#blah') // true
+
+/* customising the behaviour with an interpreter */
+
+// ignore protocol
+match('https://www.domain.com/?a=b#blah', 'https://www.domain.com?a=b#blah', ignoreProtocol) // true
+function ignoreProtocol (expectation) {
+  delete expectation.protocol
+  return expectation
+}
+
+// treat www.domain.com as the user wanting to match on 'homepage'
+match('https://www.domain.com/?a=b#blah', 'https://www.domain.com?a=b#blah', homepages) // true
+function homepages (expectation) {
+  if (expectation.host && !expectation.pathname) expectation.pathname = '/'
+  return expectation
+}
 ```
 
 ```

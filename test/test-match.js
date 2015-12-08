@@ -77,4 +77,25 @@ describe('match', function () {
       expect(match('https://a.com/blah/about', 'https://a.com/blah/about')).to.eql(true)
     })
   })
+  describe('custom input interpreter', function () {
+    it('should allow matcher to ignore protocol', function () {
+      expect(match('http://domain.com/?a=b#c=d', 'https://domain.com', ignoreProtocol)).to.eql(true)
+      expect(match('https://domain.com/?a=b#c=d', 'https://domain.com', ignoreProtocol)).to.eql(true)
+      expect(match('https://domain.com/?a=b#c=d', 'https://domainr.com', ignoreProtocol)).to.eql(false)
+
+      function ignoreProtocol (expectation) {
+        delete expectation.protocol
+        return expectation
+      }
+    })
+    it('should allow matcher to add paths to domains', function () {
+      expect(match('http://domain.com/?a=b#c=d', 'domain.com', homepages)).to.eql(true)
+      expect(match('https://domain.com/a/b?a=b#c=d', 'https://domain.com', homepages)).to.eql(false)
+
+      function homepages (expectation) {
+        if (expectation.host && !expectation.pathname) expectation.pathname = '/'
+        return expectation
+      }
+    })
+  })
 })
