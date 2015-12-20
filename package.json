@@ -21,7 +21,6 @@
     "webpack": "^1.12.9"
   },
   "dependencies": {
-    "lodash-compat": "^3.10.1",
     "urlite": "^1.2.0"
   },
   "directories": {
