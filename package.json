@@ -1,6 +1,6 @@
 {
   "name": "smurl",
-  "version": "1.2.0",
+  "version": "1.2.1",
   "description": "smart partial url matching for nodejs and the browser",
   "main": "index.js",
   "scripts": {
