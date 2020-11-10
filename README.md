@@ -5,52 +5,35 @@ smart partial url matching for nodejs and the browser
 npm install smurl
 ```
 ```javascript
-// api
-// match(actual, expected, [interpreter])
-
-// match on protocol
-match('http://www.domain.com/?a=b#blah', 'http://') // true
-match('http://www.domain.com/?a=b&b=c#blah', 'https://') // false
+var match = require('smurl')
 
 // match on path
-match('http://www.domain.com/somepath?a=b&b=c#blah', '/somepath') // true
-match('http://www.domain.com/somepath/anotherpath?a=b&b=c#blah', '/somepath') // false
-match('http://www.domain.com/?a=b&b=c#blah', '/') // true
+match('https://www.domain.com/somepath?a=b&b=c#blah', '/somepath') // true
+match('https://www.domain.com/anotherpath?a=b&b=c#blah', '/somepath') // false
+match('https://www.domain.com/?a=b&b=c#blah', '/') // true
 
 // match on querystring (order of querystring params does not matter)
-match('https://www.domain.com/?a=b#blah', '?a=b') // true
-match('http://www.domain.com/?a=b&b=c#blah', '?b=c&a=b') // true
-match('http://www.domain.com/?a=b&b=c&c=d#blah', '?b=c&a=b') // true
-match('http://www.domain.com/?y=z#blah', '?b=c&a=b') // false
+match('https://www.domain.com/?a=b&b=c', '?b=c') // true
+match('https://www.domain.com/?a=b&b=c', '?b=c&a=b') // true
+match('https://www.domain.com/?a=b&b=c&c=d', '?b=c&a=b') // true
+match('https://www.domain.com/?a=b', '?b=c') // false
 
 // match on hash
-match('http://www.domain.com/somepath?a=b&b=c#blah', '#blah') // true
+match('https://www.domain.com/#a=b&b=c', '#b=c') // true
+match('https://www.domain.com/#a=b&b=c', '#b=c&a=b') // true
+match('https://www.domain.com/#a=b&b=c&c=d', '#b=c&a=b') // true
+match('https://www.domain.com/#a=b', '#b=c') // false
 
 // match on domain
-match('https://www.domain.com/blah?a=b#blah', 'www.domain.com/blah') // true
 match('https://www.domain.com/blah?a=b#blah', 'www.domain.com') // true
 
 // match on domain and path
-match('https://www.domain.com', 'www.domain.com/') // true
+match('https://www.domain.com/a', 'www.domain.com/a') // true
 
-// match on all possible fragments
-match('https://www.domain.com/?a=b#blah', 'https://www.domain.com?a=b#blah') // true
-
-/* customising the behaviour with an interpreter */
-
-// ignore protocol
-match('https://www.domain.com/?a=b#blah', 'https://www.domain.com?a=b#blah', ignoreProtocol) // true
-function ignoreProtocol (expectation) {
-  delete expectation.protocol
-  return expectation
-}
-
-// treat www.domain.com as the user wanting to match on 'homepage'
-match('https://www.domain.com/?a=b#blah', 'https://www.domain.com?a=b#blah', homepages) // true
-function homepages (expectation) {
-  if (expectation.host && !expectation.pathname) expectation.pathname = '/'
-  return expectation
-}
+// wildcard matching
+match('https://a.b.c.domain.com/blah?a=b#blah', '*.domain.com') // true
+match('https://www.domain.com/a/1234/b', 'www.domain.com/a/*/b') // true
+match('https://www.domain.com/a/b/file.js', 'www.domain.com/**.js') // true
 ```
 
 ```

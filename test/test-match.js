@@ -4,19 +4,9 @@ var match = require('../lib/match')
 
 describe('match', function () {
   describe('protocol', function () {
-    it('should return true if protocol matches', function () {
-      expect(match('http://', 'http://')).to.eql(true)
-      expect(match('https://', 'https://')).to.eql(true)
-    })
-    it('should return false if protocol does not match', function () {
-      expect(match('http://', 'https://')).to.eql(false)
-      expect(match('https://', 'http://')).to.eql(false)
-      expect(match('http://a.com/a/b?a=b#c=d', 'http://')).to.eql(true)
-      expect(match('https://a.com/a/b?a=b#c=d', 'https://')).to.eql(true)
-    })
-    it('should ignore protocol if omitted', function () {
-      expect(match('http://a.com/a/b?a=b#c=d', 'a.com/a/b')).to.eql(true)
-      expect(match('https://a.com/a/b?a=b#c=d', 'a.com/a/b')).to.eql(true)
+    it('should ignore protocol', function () {
+      expect(match('http://a.com/a/b?a=b#c=d', 'https://a.com/a/b')).to.eql(true)
+      expect(match('https://a.com/a/b?a=b#c=d', 'http://a.com/a/b')).to.eql(true)
     })
   })
   describe('domain', function () {
@@ -34,7 +24,6 @@ describe('match', function () {
     it('should ignore domain if omitted', function () {
       expect(match('http://a.com/a', '/a')).to.eql(true)
       expect(match('https://a.com/a/b?a=b#c=d', '/a/b')).to.eql(true)
-      expect(match('https://a.com/blah', 'https://')).to.eql(true)
       expect(match('https://a.com/a/b?a=b#c=d', '?a=b')).to.eql(true)
       expect(match('https://a.com/a/b?a=b#c=d', '#c=d')).to.eql(true)
     })
@@ -55,7 +44,6 @@ describe('match', function () {
       expect(match('https://a.com/a/b?a=b#c=d', '/a')).to.eql(false)
     })
     it('should ignore path if omitted', function () {
-      expect(match('https://a.com/blah', 'https://')).to.eql(true)
       expect(match('https://a.com/a/b?a=b#c=d', '?a=b')).to.eql(true)
       expect(match('https://a.com/a/b?a=b#c=d', '#c=d')).to.eql(true)
     })
@@ -77,25 +65,34 @@ describe('match', function () {
       expect(match('https://a.com/blah/about', 'https://a.com/blah/about')).to.eql(true)
     })
   })
-  describe('custom input interpreter', function () {
-    it('should allow matcher to ignore protocol', function () {
-      expect(match('http://domain.com/?a=b#c=d', 'https://domain.com', ignoreProtocol)).to.eql(true)
-      expect(match('https://domain.com/?a=b#c=d', 'https://domain.com', ignoreProtocol)).to.eql(true)
-      expect(match('https://domain.com/?a=b#c=d', 'https://domainr.com', ignoreProtocol)).to.eql(false)
-
-      function ignoreProtocol (expectation) {
-        delete expectation.protocol
-        return expectation
-      }
+  describe('hash', function () {
+    it('should return true if query matches', function () {
+      expect(match('#a=b', '#a=b')).to.eql(true)
+      expect(match('#a=b&d=c', '#a=b&d=c')).to.eql(true)
     })
-    it('should allow matcher to add paths to domains', function () {
-      expect(match('http://domain.com/?a=b#c=d', 'domain.com', homepages)).to.eql(true)
-      expect(match('https://domain.com/a/b?a=b#c=d', 'https://domain.com', homepages)).to.eql(false)
-
-      function homepages (expectation) {
-        if (expectation.host && !expectation.pathname) expectation.pathname = '/'
-        return expectation
-      }
+    it('should be order insensitive', function () {
+      expect(match('#a=b&d=c', '#d=c&a=b')).to.eql(true)
+    })
+    it('should return false if query does not match', function () {
+      expect(match('#a=b', '#b=c')).to.eql(false)
+      expect(match('#a=b&d=c', '#a=b&d=a')).to.eql(false)
+    })
+    it('should ignore query if omitted', function () {
+      expect(match('http://a.com/blah#a=b', 'http://a.com/blah')).to.eql(true)
+      expect(match('https://a.com/blah/about', 'https://a.com/blah/about')).to.eql(true)
+    })
+  })
+  describe('wildcards', function () {
+    it('should support wildcards', function () {
+      expect(match('http://a.com/a/bcd/e/file.js', 'http://a.com/a/*/*/*.js')).to.eql(true)
+      expect(match('https://a.b.c.domain.com/blah?a=b#blah', '*.domain.com')).to.eql(true)
+      expect(match('https://www.domain.com/a/1234/b', 'www.domain.com/a/*/b')).to.eql(true)
+      expect(match('https://www.domain.com/a/b/file.js', 'www.domain.com/**.js')).to.eql(true)
+    })
+    it('should respect double asterisk', function () {
+      expect(match('http://a.com/a/bcd/e/file.js', 'http://a.com/**.js')).to.eql(true)
+      expect(match('http://a.com/a/bcd/e/file.js', 'http://a.com/*.js')).to.eql(false)
+      expect(match('http://a.com/a/bcd/e/file.js', 'http://a.com/?.js')).to.eql(false)
     })
   })
 })
