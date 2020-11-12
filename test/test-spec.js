@@ -21,4 +21,7 @@ describe('spec', function () {
       expect(spec({ nested: { a: 1, b: 2 } }, { nested: { a: 2 } })).to.eql(false)
     })
   })
+  it('should handle undefined', function () {
+    expect(spec({ nested: { a: 'hello' } }, { nested: { a: undefined } })).to.eql(true)
+  })
 })
