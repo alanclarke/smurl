@@ -6,7 +6,7 @@
   "scripts": {
     "lint": "standard",
     "coverage": "nyc --reporter=lcov --reporter=text-summary mocha test/test*",
-    "test": "mocha test/test*"
+    "test": "mocha"
   },
   "author": "alan@qubit.com",
   "license": "UNLICENSED",
