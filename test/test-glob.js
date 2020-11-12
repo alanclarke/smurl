@@ -16,7 +16,10 @@ describe('glob', function () {
   describe('double asterisk', function () {
     it('should return true if matches', function () {
       expect(glob('https://www.blah.com/a/b/c/d', 'https://www.blah.com/a/**/d')).to.eql(true)
+      expect(glob('https://www.blah.com/a/b/c/d', 'https://www.blah.com/a/****/d')).to.eql(true)
       expect(glob('https://www.blah.com/a/b/c/d', 'https://www.blah.com/a/**/c/d')).to.eql(true)
+      expect(glob('https://www.blah.com/a/b/c/d/e/f', 'https://www.blah.com/a/**/d/**/f')).to.eql(true)
+      expect(glob('https://www.blah.com/a/b/c/d/e/f', 'https://www.blah.com/a/**/d/*/f')).to.eql(true)
     })
     it('should return false if does not match', function () {
       expect(glob('https://www.blah.com/a/b/c/d', 'https://www.blah.com/a/**/c')).to.eql(false)
