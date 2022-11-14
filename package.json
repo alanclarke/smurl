@@ -20,7 +20,7 @@
     "mocha": "^5.2.0",
     "nyc": "^15.1.0",
     "standard": "^14.0.1",
-    "webpack": "^1.12.9"
+    "webpack": "^5.75.0"
   },
   "dependencies": {
     "urlite": "^3.0.0"
